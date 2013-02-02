@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{{title}}</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<div class="container">
+    <div class="hero-unit" style="background-image:url({{img_url}})">
+        <h2><strong>{{title}}</strong></h2>
+        <p class="alert alert-success"><strong>{{body}}</strong></p>
+        <p>
+            <a class="btn btn-primary btn-large" href="{{new_link}}">
+                {{btn}}
+            </a>
+        </p>
+    </div>
+    <div class="tabbable">
+    	<div class="nav nav-tabs">
+        	<li 
+                {% if not mine %}
+                	class="active"
+                {% endif %}
+             ><a href="/forum/{{sign}}">所有信息</a></li>
+            <li 
+                {% if mine %}
+                	class="active"
+                {% endif %}
+            ><a href="/forum/{{sign}}?mine=1">我发起的话题</a></li>
+        </div>
+    	<div class="nav nav-content">        
+            <ul>
+            	{% if not objs %}
+                	<label class="label label-warning">没有相关信息</label>
+                {% endif %}
+                {% for obj in objs %}
+                    <li>
+                        <div>
+                            <a href="{{link}}?id={{ obj.id }}">{{ obj.getTitle }}</a>
+                            <span class="badge badge-warning">{{ obj.count }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+	{% include 'page.html' %}
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+#div_body {
+	text-align: left;
+	vertical-align: middle;
+	margin: 0px auto;
+	padding: 0px;
+	width: 60%;
+	word-wrap:break-word;
+	background-color: #ffffff;
+}
+</style>
+
+<script type="text/javascript" language="javascript">
+
+</script>
+<title>{{ obj.title }}</title>
+</head>
+{% include 'menu.html' %}
+<div id="div_body">
+
+{% if tolow %}
+<body onload="tolow()">
+{% else %}
+<body>
+{% endif %}
+{% if page == 1 %}
+	<h1>{{ obj.title }}</h1>
+    <h4><pre>{{ obj.body }}</pre></h4>
+	{% if obj.username.username == username %}
+		{{ username }}
+	{% else %}
+		<abbr title="send message to me"><a href="/new_message/{{ obj.username.username }}">{{ obj.username.username }}</a></abbr>
+	{% endif %}
+    <p class="text-info">{{ obj.date }}</p>
+    
+    {% if canjoin %}
+	<div id="div_join">
+		{% if username %}
+        	{% if obj.username.username == username %}
+            	<a href="/joined?id={{t_id}}" class="btn btn-success">查看参与者</a>
+            {% else %}
+                {% if joined %}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>您已于 {{ datetime }}报名了!</strong>
+                    </div>
+                {% else %}
+                    <a href="javascript:void(0);" onclick="return join({{ t_id }});" class="btn btn-success">我要参加</a><br>
+                {% endif %}
+        	{% endif %}
+		{% else %}
+			登陆后可参与
+		{% endif %}
+    </div>
+	{% endif %}
+    <hr />
+{% endif %}
+
+
+
+{% if empty %}
+	还没有人回答。。。
+{% else %}
+    {% for relation in relations %}
+        <pre>{{ relation.text }}</pre><br>
+        {% if username == relation.username.username %}
+			<small><p class="text-info">{{ relation.username }}</p></small>
+        {% else %}
+			<p class="text-info"><abbr title="send message to me"><a href="/new_message/{{ relation.username }}">{{ relation.username }}</a></abbr></p>
+        {% endif %}
+        <small><font color="#CC3366">{{ relation.date }}</font></small>
+        <hr>
+    {% endfor %}
+{% endif %}
+{% include 'page.html' %}
+<br />
+<br />
+<br />
+<br />
+
+{% include 'submitform.html' %}
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" language="javascript">
+function getWidth(){
+	var width = document.body.clientWidth-100;
+	var heigh = document.documentElement.clientHeight;
+	var body_heigh = document.documentElement.offsetHeight;
+	if (heigh > body_heigh+100){
+		document.getElementById("down_copyright").innerHTML="<hr width="+width+" />Copyright © 2012 - 2013 Binger. All Rights Reserved&nbsp;";
+	}else{
+		document.getElementById("copyright").innerHTML="<hr width="+width+" />Copyright © 2012 - 2013 Binger. All Rights Reserved&nbsp;";
+	}
+}
+</script>
+</head>
+<body onload="getWidth()">
+<center>
+    <div id="down_copyright" style="position:absolute;bottom:0px;">
+    </div>
+    <div id="copyright">
+    </div>
+</center>
+<div class="hide">
+	<!--script src="http://s21.cnzz.com/stat.php?id=4985795&web_id=4985795&show=pic1" language="JavaScript"></script>
+    <script type="text/javascript">
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F939027fc078501c75ca9a32bba3df4f6' type='text/javascript'%3E%3C/script%3E"));
+    </script-->
+</div>
+</body>
+</html>

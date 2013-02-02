@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新信息</title>
+</head>
+{% include 'menu.html' %}
+<body onload="clear_user()">
+<div class="container">
+    <div class="modal" style="top:20%;">
+    <center>
+        <div class="modal-header">
+            <h1><p class="text-info">找回密码</p></h1>
+        </div>
+        <div class="model-body">
+            <form action="/forgetpasswd" method="post" class="form-signin">
+            <dl class="dl-horizontal">
+                 <div class="input-prepend">
+                    <span class="add-on">
+                        <i class="icon-user"></i>
+                    </span>
+                	<input type="text" name="username" placeholder="用户名"/>
+                </div>
+            </dl>
+            <dl class="dl-horizontal">
+                <div class="input-prepend">
+                    <span class="add-on">
+                    	<i class="icon-envelope"></i>
+                    </span>
+                    <input type="text" name="email" placeholder="注册邮箱" />
+                </div>
+            </dl>
+        </div>
+        <div class="modal-footer">
+            {% if error %}
+                <div class="alert span2">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{error}}
+            	</div>
+            {% endif %}
+            <button type="submit" class="btn btn-primary" />找回密码<i class="icon-lock icon-white"></i></button>
+            <a href="/login" class="btn btn-inverse" />登录</i></a>
+            <a href="/regiest" class="btn btn-inverse" />注册</a>
+            </form>
+        </div>
+    </center>
+    </div>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

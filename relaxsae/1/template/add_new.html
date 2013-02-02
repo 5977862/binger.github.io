@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>发表内容</title>
+<style type="text/css">
+</style>
+</head>
+{% include 'menu.html' %}
+<body>
+<center>
+<form name="new_sub_form" action="{{ action }}" method="post">
+<div>
+<br />
+<h1><p class="text-info">新内容</p></h1>
+{% if error %}
+<p class="text-error">{{error}}</p>
+{% endif %}
+<table>
+<tr><td><font color="#006699"><h3><strong>标题</strong></h3></font></td><td><input name="title" type="text" size="120" class="input-block-level" /></td></tr>
+<tr><td><font color="#3399CC"><h3><strong>内容</strong></h3></font></td>
+<td><textarea name="body" rows="8" style="width:900px;"></textarea></td></tr>
+</table>
+    <div id="div_submit">
+    {% if username %}
+    	<input type="submit" value="提交" class="btn" onclick="return check();" /> 
+    {% else %}
+    		<abbr title="登陆后才能发言"><input type="submit" value="请先登录" onclick="return check();" disabled="disabled" class="btn"></abbr>
+    {% endif %}
+    </div>
+</div>
+</form>
+</center>
+{% include 'tail.html' %}
+</body>
+</html>

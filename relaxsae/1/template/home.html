@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>首页</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<div class="container">
+	<div id="homeCarousel" class="carousel slide">
+      <!-- Carousel items -->
+		<div class="carousel-inner">
+            <div class="active item">
+                <div class="hero-unit" style="background:url({{home_img_url}});">
+                    <h2 class="">{{home_title}}</h2>
+                    <small>{{home_body}}</small>
+                    <p>
+                    <br />
+                    <a class="btn btn-info btn-large" href="/ifoundyou">
+                      <strong>{{home_btn}}</strong>
+                    </a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="hero-unit" style="background:url({{ifoundyou_img_url}});">
+                    <h2 class="text-warning">{{ifoundyou_title}}</h2>
+                    <small class="alert alert-info">{{ifoundyou_body}}</small>
+                    <p>
+                    <br />
+                    <a class="btn btn-info btn-large" href="{{ifoundyou_btn_link}}">
+                      <strong>{{ifoundyou_btn}}</strong>
+                    </a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="hero-unit" style="background-image:url({{problem_img_url}});">
+                    <h2><strong>{{problem_title}}</strong></h2>
+                        <p class="alert alert-success"><strong>{{problem_body}}</strong></p>
+                    <p>
+                        <a class="btn btn-primary btn-large" href="/forum/new_problem">
+                        {{problem_btn}}
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="hero-unit" style="background-image:url({{relax_img_url}});">
+                    <h2><strong>{{relax_title}}</strong></h2>
+                        <p class="alert alert-success"><strong>{{relax_body}}</strong></p>
+                    <p>
+                        <a class="btn btn-primary btn-large" href="/forum/new_relax">
+                        {{relax_btn}}
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="hero-unit" style="background-image:url({{tutsau_img_url}});">
+                    <h2><strong>{{tutsau_title}}</strong></h2>
+                        <p class="alert alert-success"><strong>{{tutsau_body}}</strong></p>
+                    <p>
+                        <a class="btn btn-primary btn-large" href="/forum/new_tutsau">
+                        {{tutsau_btn}}
+                        </a>
+                    </p>
+                </div>
+			</div>
+      </div>
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#homeCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#homeCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+<div class="row">
+	<div class="span4">
+    <h3>问题一览：</h3>
+    {% for problem in problems %}
+        {% for item in problem.getTitleForHome %}
+            {% if forloop.counter == 1 %}
+                <li><a href="/forum/single_problem?id={{ item }}">
+            {% else %}
+                {{ item }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <a href="/forum/problem" class="pull-right">更多 >></a>
+    </div>
+	<div class="span4">
+    <h3>组团吃喝一览：</h3>
+    {% for relax in relaxs %}
+        {% for item in relax.getTitleForHome %}
+            {% if forloop.counter == 1 %}
+                <li><a href="/forum/single_relax?id={{ item }}">
+            {% else %}
+                {{ item }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <a href="/forum/relax" class="pull-right">更多 >></a>
+    </div>
+	<div class="span4">
+    <h3>吐槽一览：</h3>
+    {% for tutsau in tutsaus %}
+        {% for item in tutsau.getTitleForHome %}
+            {% if forloop.counter == 1 %}
+                <li><a href="/forum/single_tutsau?id={{ item }}">
+            {% else %}
+                {{ item }}</a></li>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    <a href="/forum/tutsau" class="pull-right">更多 >></a>
+    </div>
+</div>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

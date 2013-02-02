@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户信息</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<div>
+<center>
+	<div class="modal" style="top:15%;">
+        <div class="modal-header">
+        	<h3><p class="text-info">密码更改</p></h3>
+        </div>
+        <form action="/change_passwd" method='post'>
+            <div class="modal-body">
+                <strong class="text-info">
+                    <div class="span2">用户名</div>{{ username }}
+                </strong><hr /><br />
+                <div class="span2"><strong>原密码</strong></div><input type="password" name="original_passwd"  /><br />
+                <div class="span2"><strong>新密码</strong></div><input type="password" name="passwd1"  /><br />
+                <div class="span2"><strong>重复新密码</strong></div><input type="password" name="passwd2"  />                    
+            </div>
+            <div class="modal-footer">
+            {% if error %}
+                <div class="alert alert-error span2">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <strong>{{error}}</strong>
+                </div>
+            {% endif %}
+            <button type="submit" class="btn btn-inverse" >修改密码<i class="icon-lock icon-white"></i></button>
+            </div>
+        </form>
+    </div>
+</center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

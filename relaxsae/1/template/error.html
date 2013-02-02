@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+{% include 'menu.html' %}
+<body>
+<center>
+	<div style="top:20%; left:30%; width:40%;">
+        <h1><p class="text-error">出错了!</p></h1>
+        <br />
+        <p class="alert alert-error">
+        	<strong>{{ error_msg }}</strong>
+        </p>
+        <br>
+        <br>
+        <a href='/home'>返回首页</a>
+    </div>
+</center>
+{% include 'tail.html' %}
+</body>
+</html>

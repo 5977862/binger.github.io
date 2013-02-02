@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{{title}}</title>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+{% if type == 1 %}
+<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/convertor.js"></script>
+{% else %}
+<script type="text/javascript" src="http://developer.baidu.com/map/jsdemo/demo/changeMore.js"></script>
+{% endif %}
+<script>
+function checkifoundyoupasswd(){
+	var postStr = "telephone="+ifoundyou_passwd_form.telephone.value+"&times="+ifoundyou_passwd_form.times.value+"&passwd="+ifoundyou_passwd_form.passwd.value;
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			if (xmlhttp.responseText.indexOf('ok') < 0){
+				document.getElementById("ifoundyou_error_div").innerHTML="<div class='alert alert-error'>"+
+            	"<button type='button' data-dismiss='alert' class='close'>&times;</button>"+
+            	"<strong>密码错误！</strong>"+
+            	"</div>";
+			}else{
+				window.location.href="/ifoundyoubytime?index_time="+ifoundyou_passwd_form.index_time.value+"&telephone="+ifoundyou_passwd_form.telephone.value;
+			}
+		}
+	}
+    xmlhttp.open("POST", "/ifoundyou_set_permission", true);  
+    xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+    xmlhttp.send(postStr);  
+}
+
+function change_div_list(){
+	obj_body = document.getElementById('div_ifoundyou_list').innerHTML;
+	document.getElementById('div_new_ifoundyou_list').innerHTML=obj_body;
+	//style.cssText("width:200px; height:520px; overflow-y:scroll; background-color:#FFC;");
+	//obj.
+}
+</script>
+</head>
+{% include 'menu.html' %}
+
+<body>
+<div class="container-fluid">
+	<div class="row-fluid">
+    	<div class="span2" style="height:500px; overflow-y:scroll; scrollbar-3dlight-color:#0F0;">
+        	<li class="nav-header"><h4 class="text-info">定位信息列表</h4></li>
+            <ul class="nav nav-list">
+                {% for coordinate in coordinates %}
+                    <li 
+                    {% if coordinate.now_time == index_time %}
+                        class="active"
+                    {% endif %}
+                    >
+                        <a href="/ifoundyoubytime?index_time={{ coordinate.now_time }}&telephone={{telephone}}">
+                        	{{ coordinate.now_time }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div id="allmap" style="width:80%;height:480px;" class="span9">
+        	{% if ispasswded %}
+                <div style="width:500px;height=500px;"></div>
+                {% if type == 1 %}
+                    <script type="text/javascript">
+						var map = new BMap.Map("allmap");
+						var gpsPoint = new BMap.Point({{longitude}}, {{latitude}});						
+						translateCallback = function(point){
+							map.centerAndZoom(point, 18);
+							var marker1 = new BMap.Marker(point);
+							map.addOverlay(marker1);
+							var infoWindow1 = new BMap.InfoWindow("{{t_time}}时，我在这里！");
+							marker1.addEventListener("click", function(){this.openInfoWindow(infoWindow1);});
+							map.enableScrollWheelZoom();
+						}
+						setTimeout(function(){
+    					BMap.Convertor.translate(gpsPoint,0,translateCallback);
+						}, 0);
+                    </script>
+                {% else %}
+                    <script type="text/javascript">
+						
+						points=[new BMap.Point({{longitude}}, {{latitude}})];
+						times=[];
+						{% for coordinatetime in coordinatetimes %}
+							points.push(new BMap.Point({{coordinatetime.longitude}}, {{coordinatetime.latitude}}));
+							{% if forloop.first or forloop.last %}
+								times.push("{{coordinatetime.current_time}}");
+							{% endif %}
+						{% endfor %}
+						var map = new BMap.Map("allmap");
+						function callback(xyResults){							
+							_points = [];
+							for(var index in xyResults){
+								var xyResult = null;
+								xyResult = xyResults[index];
+								if(xyResult.error != 0){continue;}
+								
+								if(index == 0){
+									var centerPoint = new BMap.Point(xyResult.x, xyResult.y);
+									map.centerAndZoom(centerPoint, 18);			
+									continue;
+								}
+								
+								var temp_point = new BMap.Point(xyResult.x, xyResult.y);
+								_points.push(temp_point);
+								
+								if(index == 1){									
+									var marker_start = new BMap.Marker(temp_point);
+									map.addOverlay(marker_start);								
+									var infoWindow_start = new BMap.InfoWindow("起点："+times[0]+" 时，我在这里！")
+									marker_start.addEventListener("click", function(){this.openInfoWindow(infoWindow_start);});
+								}else	if(index == xyResults.length-1){
+									var marker_end = new BMap.Marker(temp_point);
+									map.addOverlay(marker_end);								
+									var infoWindow_end = new BMap.InfoWindow("终点："+times[1]+" 时，我在这里！")
+									marker_end.addEventListener("click", function(){this.openInfoWindow(infoWindow_end);});
+								}
+							}
+							var polyline = new BMap.Polyline(_points, {strokeColor:"red", strokeWeight:1, strokeOpacity:1});
+							map.addOverlay(polyline);
+							map.enableScrollWheelZoom();
+						};
+						setTimeout(function(){
+							BMap.Convertor.transMore(points,0,callback);
+						}, 0);
+                    </script>
+                {% endif %}
+        	{% else %}
+                <div class="modal" style="top:15%;">
+                    <div class="modal-header">
+                    	<center class="alert alert-info">
+                        	<h3 class="text-info">请输入被定位者分享位置时设定的密码</h3>
+                        </center>
+                    </div>
+                    <form name="ifoundyou_passwd_form" onsubmit="return false;">
+                        <div class="modal-body">
+                        	<div class="span9">
+                            	<div class="row">
+                                    <div class="span3 offset2"><strong class=""><h4>手机号码</h4></strong></div>
+                                    <div class="span6"><div class="alert alert-success">{{telephone}}</div></div>
+                                </div>
+                                <div class="row">
+                                	<div class="span3 offset2"><strong class=""><h4>定位时间</h4></strong></div>
+                                	<div class="span6"><div class="alert alert-success">{{ date }}</div></div>
+                                </div>
+                                <div class="row">
+                                    <div class="span3 offset2"><strong class=""><h4>定位密码</h4></strong></div>
+                                    <div class="span5">
+                                        <input type="hidden" name="telephone" value="{{telephone}}" />
+                                        <input type="hidden" name="times" value="{{times}}" />
+                                        <input type="hidden" name="index_time" value="{{index_time}}" />
+                                        <input name='passwd' type="password" placeholder="定位密码" />
+                                    </div>
+                                </div>
+                        	</div>
+                        </div>
+                        <div class="modal-footer">
+                            <div id="ifoundyou_error_div" class="span4"></div>
+                        	<button type="submit" class="btn btn-inverse" onclick="checkifoundyoupasswd()">开始定位<i class="icon-map-marker icon-white"></i></button>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+    	</div>
+    </div>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

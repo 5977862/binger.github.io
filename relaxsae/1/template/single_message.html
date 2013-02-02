@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{{ message.getTitle }}</title>
+<style type="text/css">
+#div_body{
+	text-align: left;
+	margin: 0px auto;
+	width: 60%;
+}
+</style>
+</head>
+{% include 'menu.html' %}
+<body>
+<div class="container">
+<center>
+<p class="text-info pull-left">来自{{ message.user_from }}的消息</p><br />
+<div><h3>{{ message.title }}</h3></div>
+<div id="div_body"><pre>{{ message.body }}</pre>
+<div class="pull-right"><a href="/new_message/{{message.user_from}}" class="btn btn-success">回复</a>&nbsp;&nbsp;<a href="/del_message/{{message.id}}" class="btn btn-danger">删除</a></div></div>
+</center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

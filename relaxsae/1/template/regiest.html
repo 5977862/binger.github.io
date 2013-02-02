@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>注册</title>
+</head>
+{% include 'menu.html' %}
+<body onload="clear_user()">
+<div class="container">
+<center>
+<form name="regiest_form" action="/regiest" method="post" onsubmit="return checkregiest();">
+<br />
+	<div class="modal">
+    	<div class="modal-header">
+        	<h3 class="text-info">用户注册</h3>
+        </div>
+        <div class="modal-body">
+            <table>	
+                <tr>
+                <td colspan="2">
+                {% if error %}
+                <div class="alert alert-error">
+                <button class="close" data-dismiss="alert">&times;</button>
+                <strong>{{error}}</strong>
+                </div>
+                {% endif %}
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-user"></i>
+                                </span>
+                                <input type="text" name="username" placeholder="用户名" onblur="checkuser()">
+                            </div>
+                            <div id="username">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-lock"></i>
+                                </span>
+                                <input type="password" name="passwd1" placeholder="密码" onblur="checkpasswd1()">
+                            </div>
+                            <div id="passwd1">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-lock"></i>
+                                </span>
+                                <input type="password" name="passwd2" placeholder="确认密码" onblur="checkpasswd2()">
+                            </div>
+                            <div id="passwd2">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-envelope"></i>
+                                </span>
+                                <input type="text" name="email" placeholder="邮箱" onblur="checkemail()">
+                            </div>
+                            <div id="email">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-signal"></i>
+                                </span>
+                                <input type="text" name="telephone" placeholder="手机" onblur="checktelephone()">
+                            </div>
+                            <div id="telephone">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <span class="label label-success">性别</span>
+                            <i class="icon-hand-right"></i>
+                            <label class="radio inline">
+                            <input type="radio" name="gender" value="男" onclick="checkgender();" />男</label>
+                            <label class="radio inline">
+                            <input type="radio" name="gender" value="女" onclick="checkgender();"  />女</label>
+                            </div>
+                            <div id="gender">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea name="address" placeholder="地址(选填)" style="width:235px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+        	<input id="regiest_submit" type="submit" value="确认注册" class="btn btn-primary" />
+        	<a href="/login" class="btn btn-inverse">登录</a>
+        	<a href="forgetpasswd" class="btn btn-inverse">忘记密码</a>
+        </div>
+    </div>
+</form>
+</center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

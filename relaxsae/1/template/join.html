@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{{ relax.title }}---参与者</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<center>
+<div id="print" class="container">
+{% if empty %}
+	<div class="alert">还没有人参与</div>
+{% else %}
+    <table class="table table-striped table-bordered table-condensed">
+    <tr class="success">
+        <td><strong>用户名</strong></td><td><strong>性别</strong></td><td><strong>邮箱</strong></td><td><strong>手机</strong></td><td><strong>地址</strong></td>
+    </tr>
+        {% for join in joins %}
+            <tr>
+            <td>{{ join.username.username }}</td><td>{{ join.username.gender }}</td><td>{{ join.username.email }}</td><td>{{ join.username.telephone }}</td><td>{{ join.username.address }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+</div>
+    <a class="btn btn-inverse" onclick="return printme();"><i class="icon-print icon-white"></i>&nbsp;打印</a>
+</center>
+{% include 'tail.html' %}
+</body>
+</html>

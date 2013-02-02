@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>消息</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<div class="container">
+<center>
+<h1>消息</h1>
+<table class="table table-condensed table-hover table-bordered">
+	<tr bgcolor="#00CCFF">
+    	<td>序列</td><td width="200">标题</td><td>来自</td><td>时间</td><td>动作</td>
+    </tr>
+    {% for message in messages %}
+    	{% if message.state == 0 %}
+        	<tr class="info">
+        {% else %}
+        	<tr>
+        {% endif %}
+        <td>{{ forloop.counter }}</td>
+        <td><a href="/message/{{message.id}}">{{ message.getTitle }}</a></td>
+        <td>{{ message.user_from }}</td>
+        <td>{{ message.date }}</td>
+        <td><a href="/new_message/{{ message.user_from }}" class="label label-success">回复</a>|<a href="/del_message/{{ message.id }}" ><i class="icon-trash"></i></a></td>
+    {% endfor %}
+    <tr>
+    	<td colspan="5" style="text-align: right;"><a href="/new_message/" class="btn btn-link">发送消息 >></a></td>
+    </tr>
+</table>
+</center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

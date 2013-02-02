@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div class="btn-group">
+    <a class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i><font color="#FFFFFF">{{ username }}</font><span class="caret"></span></a>
+    <ul class="dropdown-menu">
+    <li><a href="/userinfo"><i class="icon-user"></i>查看资料</a></li>
+    <li><a href="/edit"><i class="icon-pencil"></i>修改信息</a></li>
+    <li><a href="/change_passwd"><i class="icon-wrench"></i>修改密码</a></li>
+    <li class="divider"></li>
+    <li><a href="javascript:void(0);" onclick="return logout();"><i class="icon-off"></i>退出</a></li>
+    </ul>
+</div>
+<div class="btn-group">
+	<a href="/message" class="btn btn-link" ><i class="icon-envelope icon-white"></i><font color="#FFFFFF">({{ msg_count }})</font></a>
+</div>
+</body>
+</html>

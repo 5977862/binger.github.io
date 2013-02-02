@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新信息</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<div class="modal" style="top:15%;">
+    <center>
+        <div class="modal-header">
+            <h1>新信息</h1>
+        </div>
+        <form action="/new_message/" method="post">
+        <div class="modal-body">
+            <table>
+            <tr><td><strong>发送给：</strong></td><td>{{send_to}}<input 
+            {% if send_to %}
+            type="hidden"
+            {% else %}
+            type="text"
+            {% endif %}
+             name="send_to" maxlength="30" value="{{send_to}}"/></td></tr>
+            <tr><td>标题：</td><td><input type="text" name="title"  size="30"/></td></tr>
+            <tr><td>内容：</td><td><textarea name="body" rows="6" style="width:350px;"></textarea></td></tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            {% if error %}
+                <div class="alert span2">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{error}}
+                </div>
+            {% endif %}
+        	<button type="submit" class="btn btn-inverse">发送信息<i class="icon-share-alt icon-white"></i></button>
+        </div>
+        </form>
+    </center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

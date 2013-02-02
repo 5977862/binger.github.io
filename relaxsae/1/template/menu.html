@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="/css/bootstrap-responsive.min.css" rel="stylesheet" />
+<link href="/css/default.css" rel="stylesheet" />
+<script src="/js/jquery.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/default.js" type="text/javascript"></script>
+<script>
+
+function login(username,passwd)
+{
+	var postStr = "username="+username+"&passwd="+passwd;
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			if (xmlhttp.responseText.indexOf('用户名或密码错误') < 0){
+				document.getElementById("div_login").innerHTML=xmlhttp.responseText;
+				document.getElementById("div_submit").innerHTML="<input type='submit' value='提交' onclick='return checksub();' class='btn'>";
+				document.getElementById("div_join").innerHTML="<a href='javascript:void(0);' onclick='return join({{ t_id }});' class='btn btn-success'>我要参加</a>";
+				//document.getElementById("div_ifoundyou_alert").innerHTML="";
+			}else{
+				document.getElementById("div_loginerr").innerHTML=""+
+                        "<div class='alert alert-warning'>"+
+                            "<button type='button' class='close' data-dismiss='alert'>&times;</button>"+
+                            "<strong>用户名或密码错误！</strong>"+
+                        "</div>";
+			}
+		}
+	}
+    xmlhttp.open("POST", "/login", true);  
+    xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+    xmlhttp.send(postStr);  
+}
+
+
+</script>
+</head>
+
+<body>
+<div class="navbar navbar-inverse">
+	<div class="navbar-inner">
+        <div id="div_menu" class="pull-left">
+            <ul class="nav">
+                <li 
+                {% if sign == 'home' %}
+                    class="active"
+                {% endif %}
+                ><a href="/home"><strong>首页</strong></a></li>
+                <li 
+                {% if sign == 'news' %}
+                class="active"
+                {% endif %}
+                ><a href="/news"><strong>新闻</strong></a></li>
+                <li 
+                {% if sign == 'problem' %}
+                class="active"
+                {% endif %}
+                ><a href="/forum/problem"><strong>答疑</strong></a></li>
+                <li 
+                {% if sign == 'relax' %}
+                class="active"
+                {% endif %}
+                ><a href="/forum/relax"><strong>放松</strong></a></li>
+                <li 
+                {% if sign == 'tutsau' %}
+                class="active"
+                {% endif %}
+                ><a href="/forum/tutsau"><strong>吐槽</strong></a></li>
+                <li 
+                {% if sign == 'ifoundyou' %}
+                class="active"
+                {% endif %}
+                ><a href="/ifoundyou"><strong>IfoundYou</strong><i class="icon-map-marker"></i></a></li>
+            </ul>
+        </div>
+        <div id="div_login" class="pull-right">
+            {% if username %}
+            <div class="btn-group">
+                <a class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i><font color="#FFFFFF">{{ username }}</font><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                <li><a href="/userinfo"><i class="icon-user"></i>查看资料</a></li>
+                <li><a href="/edit"><i class="icon-edit"></i>修改信息</a></li>
+                <li><a href="/change_passwd"><i class="icon-wrench"></i>修改密码</a></li>
+                <li class="divider"></li>
+                <li><a href="javascript:void(0);" onclick="return logout();"><i class="icon-off"></i>退出</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <a href="/message" class="btn btn-link" ><i class="icon-envelope icon-white"></i><font color="#FFFFFF">({{ msg_count }})</font></a>
+            </div>
+            
+            {% else %}
+                <form name="f_login" class="form-inline" onsubmit="return false;">
+                    <input type="text" name="username" placeholder='用户名' >
+                    <input type="password" name="passwd" class="input-small" placeholder='密码'>
+                    <button type="submit" class="btn btn-link btn-small" href="javascript:void(0);" onclick="return login(f_login.username.value,f_login.passwd.value);" ><font color="#FFFFFF">登陆</font></button>
+                    <a href="#regiestModal" role="button" class="btn btn-link btn-small" data-toggle="modal"><font color="#FFFFFF">注册</font></a>
+                    <a class="btn btn-link btn-small" href="/forgetpasswd"><font color="#FFFFFF">忘记密码</font></a>
+                    <div id="div_loginerr"></div>
+                    </form>
+                </form>
+            {% endif %}
+        </div>
+	</div>
+</div> 
+<!-- Modal -->
+<div id="regiestModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<center>
+{% if not username %}
+    <div class="modal-header">
+    	<h2 class="text-info">用户注册</h2>
+    </div>
+    <div class="modal-body">
+        <form name="regiest_form" action="/regiest" method="post" onsubmit="return checkregiest();">
+            <table>
+                <tr>
+                <td colspan="2">
+                {% if error %}
+                <div class="alert alert-error">
+                <button class="close" data-dismiss="alert">&times;</button>
+                <strong>{{error}}</strong>
+                </div>
+                {% endif %}
+                </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-user"></i>
+                                </span>
+                                <input type="text" name="username" placeholder="用户名" onblur="checkuser()">
+                            </div>
+                            <div id="username">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-lock"></i>
+                                </span>
+                                <input type="password" name="passwd1" placeholder="密码" onblur="checkpasswd1()">
+                            </div>
+                            <div id="passwd1">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-lock"></i>
+                                </span>
+                                <input type="password" name="passwd2" placeholder="确认密码" onblur="checkpasswd2()">
+                            </div>
+                            <div id="passwd2">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-envelope"></i>
+                                </span>
+                                <input type="text" name="email" placeholder="邮箱" onblur="checkemail()">
+                            </div>
+                            <div id="email">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">
+                                    <i class="icon-signal"></i>
+                                </span>
+                                <input type="text" name="telephone" placeholder="手机" onblur="checktelephone()">
+                            </div>
+                            <div id="telephone">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="controls">
+                            <span class="label label-success">性别</span>
+                            <i class="icon-hand-right"></i>
+                            <label class="radio inline">
+                            <input type="radio" name="gender" value="男" onclick="checkgender();" />男</label>
+                            <label class="radio inline">
+                            <input type="radio" name="gender" value="女" onclick="checkgender();"  />女</label>
+                            <div id="gender">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea name="address" placeholder="地址(选填)" style="width:235px;"></textarea>
+                    </td>
+                </tr>
+            </table>
+    </div>
+    <div class="modal-footer">
+       	<button id="regiest_submit" type="submit" class="btn btn-inverse">确认注册<i class="icon-user icon-white"></i></button>
+        </form>
+    </div>
+{% endif %}
+</center>
+</div>
+</body>
+</html>

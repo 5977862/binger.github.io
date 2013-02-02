@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>信息修改</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<center>
+<div>
+    <div class="modal" style="top:15%;">
+        <div class="modal-header">
+            <h4 class="text-info">用户信息修改</h4>
+        </div>
+        <br />
+        <form action="/edit" method='post'>
+            <table border="0">
+                <tr>
+                    <td width="40%"><strong><p class="text-info">用户名：</p></strong></td><td width="71%"><strong><font color="#000099">{{ username }}</font></strong></td>
+                </tr>
+                    <tr>
+                        <td>性别:</td><td>{{ userinfo.gender }}</td>
+                    </tr>
+                    <tr>
+                        <td>邮箱:</td><td><input name="email" type="text" value="{{userinfo.email}}"></td>
+                    </tr>
+                    <tr>
+                        <td>手机:</td><td><input name="telephone" type="text" value="{{userinfo.telephone}}"></td>
+                    </tr>
+                    <tr>
+                        <td>地址:</td><td><textarea name="address" cols="19" rows="3" >{{userinfo.address}}</textarea></td>
+                </tr>
+            </table>
+        <div class="modal-footer">
+            <blockquote class="text-warning pull-left">若您修改邮箱，您的新邮箱会收到含有激活链接的邮件，请查收重新激活！</blockquote>
+            <button type="submit" class="btn btn-inverse">修改信息<i class="icon-edit icon-white"></i></button>
+            {% if error %}
+                <div class="alert span3">
+                <button type="button" data-dismiss="alert" class="close">&times;</button>
+                <strong>{{error}}</strong>
+                </div>
+            {% endif %}
+        </div>
+        </form>
+    </div>
+</div>
+</center>
+{% include 'tail.html' %}
+</body>
+</html>

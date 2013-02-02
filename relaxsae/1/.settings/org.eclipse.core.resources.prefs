@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//catchnews/views.py=gb2312
+encoding//ifoundyou/views.py=utf-8
+encoding//items/basemodel.py=utf-8
+encoding//items/models.py=utf-8
+encoding//items/views.py=utf-8
+encoding//message/models.py=utf-8
+encoding//message/views.py=utf-8
+encoding//mysite/settings.py=utf-8
+encoding//mysite/views.py=utf-8
+encoding//news/views.py=utf-8
+encoding//userinfo/forms.py=utf-8
+encoding//userinfo/views.py=utf-8
+encoding/<project>=UTF-8

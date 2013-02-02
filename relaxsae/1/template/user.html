@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>用户信息</title>
+<style type="text/css">
+#div_address {
+	width: 70%;
+	word-wrap: break-word;
+	text-align: left;
+}
+</style>
+</head>
+{% include 'menu.html' %}
+<body>
+<div>
+<center>
+	<div class="modal" style="top:15%;">
+    	<div class="modal-header">
+        	<h4><p class="text-info">用户信息</p></h4>
+        </div>
+        {% if userinfo.activity == '0' %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>您目前尚未激活邮箱，因此忘记密码不能找回，请尽快登陆{{ userinfo.email }}注册，如需更换邮箱或重新获取注册链接，请<a href="/edit">点击更换</a></strong>
+            </div>
+        {% endif %}
+        <form action="/submit_user" method='post'>
+        <table>
+            <tr>
+                <td colspan="2">
+                {% if error %}
+                    <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>填写信息有误，请重新填写！</strong>
+                    </div>
+                {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td width="29%"><strong><p class="text-info">用户名：</p></strong></td><td width="71%"><strong><p class="text-info">{{ username }}</p></strong></td>
+            </tr>
+                <tr>
+                    <td>性别:</td><td>{{ userinfo.gender }}</td>
+                </tr>
+                <tr>
+                    <td>邮箱:</td><td>{{ userinfo.email }}</td>
+                </tr>
+                <tr>
+                    <td>手机:</td><td>{{ userinfo.telephone }}</td>
+                </tr>
+                <tr>
+                    <td>地址:</td><td><address><div id="div_address">{{ userinfo.address }}</div></address></td>
+                </tr>
+        </table>
+        </form>
+        <div class="modal-footer">
+        	<a href="/edit" class="btn btn-inverse">修改信息<i class="icon-edit icon-white"></i></a>
+        </div>
+    </div>
+</center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>新信息</title>
+</head>
+{% include 'menu.html' %}
+<body>
+<div class="container">
+<center>
+<h1><p class="text-info">找回密码</p></h1>
+<table>
+<tr><td>
+{% if error %}
+<div class="alert">
+<button type="button" class="close" data-dismiss="alert">&times;</button>{{error}}
+</div>
+{% endif %}
+</td></tr>
+<tr><td>
+<form action="/getpasswd" method="post" class="form-signin">
+<input type="hidden" name="username" value="{{t_username}}" />
+{{t_username}}
+</td></tr>
+<tr><td>
+<input type="text" name="passwd1" placeholder="设置密码" />
+</td></tr>
+<tr><td>
+<input type="text" name="passwd2" placeholder="确认密码" />
+</td></tr>
+<tr><td>
+<input type="submit" value="确认" class="btn btn-primary"/>
+</form>
+</td></tr>
+</table>
+</center>
+</div>
+{% include 'tail.html' %}
+</body>
+</html>
